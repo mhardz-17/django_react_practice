@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+admin.site.site_header = 'My Django React Admin'
+admin.site.site_title = 'Django React'
+admin.site.index_title = 'My Django React Admin'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]

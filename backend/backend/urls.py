@@ -16,10 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.urls import path, include  # add this
+from rest_framework import routers  # add this
+from todo import views  # add this
+
 admin.site.site_header = 'My Django React Admin'
 admin.site.site_title = 'Django React'
 admin.site.index_title = 'My Django React Admin'
 
+router = routers.DefaultRouter()  # add this
+router.register(r'todos', views.TodoView, 'todo')  # add this
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
 ]

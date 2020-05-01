@@ -293,7 +293,7 @@ In most cases bumping the `react-scripts` version in `package.json` and running 
 - chore: update `react-scripts` to `1.1.5`
 
 ##### `v2.0.8`
-- fix(User): add missing unique key prop
+- fix(Todo): add missing unique key prop
 - fix(Login): add missing form and autoComplete
 - fix(Register): add missing form and autoComplete
 - chore: update `@coreui/react` to `2.0.5`
@@ -302,7 +302,7 @@ In most cases bumping the `react-scripts` version in `package.json` and running 
 - chore: update `babel-jest` to `23.4.2`
 
 ##### `v2.0.5`
-- feat(router): Users/User Breadcrumb example with `/users/:id`
+- feat(router): Todos/Todo Breadcrumb example with `/users/:id`
 - chore: update `@coreui/react` to `2.0.4`,
 - chore: update `prop-types` to `15.6.2`
 - chore: update `react` to `16.4.1`

@@ -6,12 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Test</title>
+  {% load static %}
+  <link rel="shortcut icon" href="{% static 'frontend/img/favicon.png' %}" />
 </head>
-<body id="root">
-    <h1>Django React Practice</h1>
-
-
+<body>
+  <div id="root"></div>
 </body>
-{% load static %}
+
 <script src="{% static "frontend/build/app.js" %}"></script>
 </html>

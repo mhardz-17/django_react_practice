@@ -41,6 +41,6 @@ module.exports = {
   },
   output: {
     // path: path.resolve(__dirname, 'my_django_react_app/frontend/static/frontend'),
-    publicPath: 'http://localhost:8000/static/frontend/'
+    publicPath:'static/frontend/build/'
   }
 }

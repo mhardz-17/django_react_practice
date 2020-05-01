@@ -56,8 +56,8 @@
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject",
-    "dev": "webpack --mode development --watch ./my_django_react_app/frontend/src/index.js --output ./my_django_react_app/frontend/static/frontend/app.js",
-    "build": "webpack --mode production ./my_django_react_app/frontend/src/index.js --output ./my_django_react_app/frontend/static/frontend/app.js"
+    "dev": "webpack --mode development --watch ./my_django_react_app/frontend/src/index.js --output ./my_django_react_app/frontend/static/frontend/build/app.js",
+    "build": "webpack --mode production ./my_django_react_app/frontend/src/index.js --output ./my_django_react_app/frontend/static/frontend/build/app.js"
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"

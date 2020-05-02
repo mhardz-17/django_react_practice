@@ -44,13 +44,26 @@ export const userLoaded = (state,{payload}) =>{
   }
 }
 
+export const logoutUserSuccess = (state,{payload}) =>{
+  localStorage.removeItem('react_django_token');
+  console.log('user logged out')
+  return {
+    ...state,
+    isAuthenticated: false,
+    isLoading: false,
+    user: {},
+    token: {}
+  }
+}
+
+
 export const reducer = createReducer(INITIAL_STATE, {
   // [UserTypes.FETCH_USER_LOADING]: fetchUserLoading,
   // [UserTypes.FETCH_USER_SUCCESS]: fetchUserSuccess,
   // [UserTypes.FETCH_USER_FAILURE]: fetchUserFailure,
   [AuthTypes.LOGIN_SUCCESS]: loginSuccess,
   // [UserTypes.LOGIN_FAILURE]: loginFailed,
-  [AuthTypes.LOGOUT_USER]: logoutUser,
+  [AuthTypes.LOGOUT_USER_SUCCESS]: logoutUserSuccess,
   [AuthTypes.USER_LOADED]: userLoaded,
 })
 

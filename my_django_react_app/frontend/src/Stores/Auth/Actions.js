@@ -13,8 +13,8 @@ const { Types, Creators } = createActions({
   loginSuccess:['payload'],
   // loginFailure:['error'],
   // logout:null,
-  logoutUser:null,
-  userLoaded:['payload']
+  logoutUserSuccess:null,
+  userLoaded:['payload'],
   // registerUser: ['data'],
   // fetchUserMyData: ['credentials'],
 })
@@ -36,6 +36,27 @@ export const loadUser = () => (dispatch, getState) => {
       // });
     });
 };
+
+export const logoutUser = () => (dispatch, getState) => {
+  // User Loading
+  // dispatch({ type: USER_LOADING });
+
+  console.log('dispatching logout user')
+
+  axios
+    .post('/api/auth/logout/',{}, tokenConfig(getState))
+    .then((res) => {
+      console.log(res)
+      dispatch(Creators.logoutUserSuccess())
+    })
+    .catch((err) => {
+      // dispatch(returnErrors(err.response.data, err.response.status));
+      // dispatch({
+      //   type: AUTH_ERROR,
+      // });
+    });
+};
+
 
 export const tokenConfig = (getState) => {
   // Get token from state

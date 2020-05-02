@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
+import {connect} from "react-redux";
+import AuthActions, {logoutUser} from "../../Stores/Auth/Actions";
 
 const propTypes = {
   children: PropTypes.node,
@@ -66,7 +68,7 @@ class DefaultHeader extends Component {
               <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>
               <DropdownItem divider />
               <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-              <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
+              <DropdownItem onClick={e => {this.props.logoutUser()}}><i className="fa fa-lock"></i> Logout</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
@@ -80,4 +82,23 @@ class DefaultHeader extends Component {
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;
 
-export default DefaultHeader;
+const mapStateToProps = (state) => ({
+  // auth: {name : '', isLoading: false, isAuthenticated: true},
+  auth: state.auth,
+});
+
+// const mapDispatchToProps = (dispatch) => ({
+//   // auth: {name : '', isLoading: false, isAuthenticated: true},
+//   logoutUser: () =>  {
+//     console.log('dispatching logout')
+//     dispatch(logoutUser())
+//   },
+// });
+
+const mapDispatchToProps = (dispatch) => ({
+  logoutUser: () => {
+    console.log('dispatching logout')
+     dispatch(logoutUser())
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultHeader);

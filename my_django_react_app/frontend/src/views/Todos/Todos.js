@@ -20,6 +20,7 @@ import {AppSwitch} from "@coreui/react";
 import {Button} from "reactstrap";
 import Alert from "../../components/Alert"
 import Swal from "sweetalert2";
+import {tokenConfig} from "../../Stores/Auth/Actions";
 
 function TodoRow(props) {
   const {todo,index, onClickEdit} = props
@@ -78,7 +79,8 @@ class Todos extends Component {
   }
 
   loadTodos =(page) => {
-    axios.get('api/todos',{page})
+    console.log(tokenConfig())
+    axios.get('api/todos',tokenConfig())
       .then(response => {
         this.setState({todos: response.data})
       })
@@ -99,7 +101,7 @@ class Todos extends Component {
 
   onSave = (todo, cb) => {
     if (todo.id) { //means edit
-      axios.post(`api/todos/{todo.id}`, todo)
+      axios.post(`api/todos/{todo.id}`, todo,tokenConfig())
         .then(response => {
           this.setState({
             todos: [...this.state.todos.map(todo => {
@@ -115,7 +117,7 @@ class Todos extends Component {
         this.setState(error);
       })
     } else {
-      axios.post('api/todos/', todo)
+      axios.post('api/todos/', todo,tokenConfig())
         .then(response => {
           this.setState({todos: [...this.state.todos, response.data], showModal: false, action: '', todo: {},message: 'Added Successful'})
         }).catch(error => {
@@ -126,7 +128,7 @@ class Todos extends Component {
   }
 
   onClickDelete = id => {
-    axios.delete(`api/todos/${id}`)
+    axios.delete(`api/todos/${id}`,tokenConfig())
         .then(response => {
           this.setState({
             todos: [...this.state.todos.filter(todo => {

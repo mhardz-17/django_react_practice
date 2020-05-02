@@ -18,9 +18,28 @@ import todoData from './TodoData'
 import TodoModal from './TodoModal'
 import {AppSwitch} from "@coreui/react";
 import {Button} from "reactstrap";
+import Alert from "../../components/Alert"
+import Swal from "sweetalert2";
 
 function TodoRow(props) {
   const {todo,index, onClickEdit} = props
+
+  const onClickDelete = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        props.onClickDelete(props.todo.id);
+      }
+    })
+
+  }
 
   return (
     <tr key={todo.id.toString()}>
@@ -33,7 +52,7 @@ function TodoRow(props) {
       <td>
         <Row className="align-items-center">
           <Button size='sm' className={'mr-1'} onClick={ () => onClickEdit(todo)}><i className="fa fa-edit fa-lg"></i>Edit</Button>
-          <Button size='sm' color='danger'><i className="fa fa-edit fa-lg"></i>Delete</Button>
+          <Button size='sm' color='danger' onClick={onClickDelete}><i className="fa fa-edit fa-lg"></i>Delete</Button>
         </Row>
       </td>
     </tr>
@@ -48,36 +67,89 @@ class Todos extends Component {
     this.state = {
       showModal: false,
       action: '',
-      todo: {}
+      todos:[],
+      todo: {},
+      message: ''
     }
+  }
+
+  componentDidMount() {
+    this.loadTodos();
+  }
+
+  loadTodos =(page) => {
+    axios.get('api/todos',{page})
+      .then(response => {
+        this.setState({todos: response.data})
+      })
   }
 
   toggleModal = () => {
     this.setState({showModal: false,action: ''})
   }
 
+
+  onClickAdd = () => {
+    this.setState({showModal: true,action: 'add',todo:{}})
+  }
+
   onClickEdit = (todo) => {
-    console.log(todo)
     this.setState({showModal: true,action: 'edit',todo})
   }
 
+  onSave = (todo, cb) => {
+    if (todo.id) { //means edit
+      axios.post(`api/todos/{todo.id}`, todo)
+        .then(response => {
+          this.setState({
+            todos: [...this.state.todos.map(todo => {
+              return todo.id == response.data.id ? response.data : todo
+            })],
+            showModal: false,
+            action: '',
+            todo: {},
+            message: 'Update Successful'
+          })
+        }).catch(error => {
+        console.log(error)
+        this.setState(error);
+      })
+    } else {
+      axios.post('api/todos/', todo)
+        .then(response => {
+          this.setState({todos: [...this.state.todos, response.data], showModal: false, action: '', todo: {},message: 'Added Successful'})
+        }).catch(error => {
+        console.log(error)
+        this.setState(error);
+      })
+    }
+  }
 
-
-  onSave = (todo) => {
-    console.log('save')
+  onClickDelete = id => {
+    axios.delete(`api/todos/${id}`)
+        .then(response => {
+          this.setState({
+            todos: [...this.state.todos.filter(todo => {
+              return todo.id != id
+            })],
+            message: 'Delete Successful'
+          })
+        }).catch(error => {
+        console.log(error)
+        this.setState(error);
+      })
   }
 
   render() {
-    const todoList = todoData.filter((user) => user.id < 10)
-
     return (
       <div className="animated fadeIn">
+        { this.state.message && <Alert msg={this.state.message} /> }
         <Row>
           <Col xl={12}>
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Todos <small className="text-muted">List</small>
-                <Button color='success float-right'>Add</Button>
+                <Button color='success float-right' onClick={this.onClickAdd}>Add</Button>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -93,8 +165,8 @@ class Todos extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {todoList.map((todo, index) =>
-                      <TodoRow key={index} index={index} todo={todo} onClickEdit={this.onClickEdit} />
+                    {this.state.todos.map((todo, index) =>
+                      <TodoRow key={index} index={index} todo={todo} onClickEdit={this.onClickEdit} onClickDelete={this.onClickDelete} />
                     )}
                   </tbody>
                 </Table>
@@ -103,7 +175,7 @@ class Todos extends Component {
           </Col>
         </Row>
         {
-          this.state.showModal && <TodoModal todoItem={this.state.todo} toggleModal={this.toggleModal}  onSave={this.onSave} />
+          this.state.showModal && <TodoModal todoItem={this.state.todo} toggleModal={this.toggleModal}  onSave={this.onSave} errors={this.state.errors} />
         }
       </div>
     )

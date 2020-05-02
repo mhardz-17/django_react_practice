@@ -26,13 +26,25 @@ class TodoModal extends Component {
     }
   }
 
-    onInputChange = (e) => {
-    let todo = this.state.todoItem, value=e.target.value;
+  onInputChange = (e) => {
+    console.log(e);
+    let todo = this.state.todoItem, value = e.target.value;
     if (e.target.type === "checkbox") {
       value = e.target.checked;
     }
     todo[e.target.name] = value
-    this.setState({todoItem : {...todo}})
+    this.setState({todoItem: {...todo}})
+  }
+
+  onClickSave = () => {
+    this.props.onSave(this.state.todoItem);
+    // this.props.onSave(this.state.todoItem, (isSuccess, data) => {
+    //   if(isSuccess) {
+    //
+    //   } else {
+    //     //show Error Here
+    //   }
+    // });
   }
 
   render() {
@@ -44,36 +56,39 @@ class TodoModal extends Component {
         <ModalBody>
           <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
             <FormGroup row>
-                <Col md="3">
-                  <Label htmlFor="title">Title</Label>
-                </Col>
-                <Col xs="12" md="9">
-                 <Input type="text" id="title" name='title' placeholder="Enter todo title" value={todoItem.title} required
+              <Col md="3">
+                <Label htmlFor="title">Title</Label>
+              </Col>
+              <Col xs="12" md="9">
+                <Input type="text" id="title" name='title' placeholder="Enter todo title" value={todoItem.title || ''}
+                       required
                        onChange={this.onInputChange}/>
-                </Col>
+              </Col>
             </FormGroup>
             <FormGroup row>
-                <Col md="3">
-                  <Label htmlFor="description">Description</Label>
-                </Col>
-                <Col xs="12" md="9">
-                 <Input type="textarea" id="description" name='description' placeholder="Enter todo description" value={todoItem.description} required
+              <Col md="3">
+                <Label htmlFor="description">Description</Label>
+              </Col>
+              <Col xs="12" md="9">
+                <Input type="textarea" id="description" name='description' placeholder="Enter todo description"
+                       value={todoItem.description || ''} required
                        onChange={this.onInputChange} rows={5}/>
-                </Col>
+              </Col>
             </FormGroup>
             <FormGroup row>
-                <Col md="3">
-                  <Label htmlFor="description">Completed</Label>
-                </Col>
-                <Col xs="12" md="9">
-                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} checked={todoItem.completed} onChange={this.onInputChange} />
-                </Col>
+              <Col md="3">
+                <Label htmlFor="description">Completed</Label>
+              </Col>
+              <Col xs="12" md="9">
+                <AppSwitch name='completed' className={'mx-1'} variant={'pill'} color={'primary'}
+                           checked={todoItem.completed} onChange={this.onInputChange}/>
+              </Col>
             </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter>
           <Button color="primary"
-                  onClick={() => onSave(this.state.todoItem)}>{todoItem.id ? 'Update' : 'Save'}</Button>
+                  onClick={this.onClickSave}>{todoItem.id ? 'Update' : 'Save'}</Button>
           <Button color="secondary" onClick={toggleModal}>Cancel</Button>
         </ModalFooter>
       </Modal>

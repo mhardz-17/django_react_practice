@@ -31,10 +31,15 @@
     "react-app-polyfill": "^1.0.6",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-test-renderer": "^16.13.1",
     "reactstrap": "^8.4.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "reduxsauce": "^1.1.2",
     "simple-line-icons": "^2.4.1",
     "sweetalert2": "^9.10.12"
   },
@@ -48,6 +53,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "file-loader": "^6.0.0",
     "react-scripts": "^3.4.1",
+    "redux-devtools": "^3.5.0",
     "svg-inline-loader": "^0.8.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"

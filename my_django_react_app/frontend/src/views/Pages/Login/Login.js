@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -16,6 +16,10 @@ import {
   Row
 } from 'reactstrap';
 import Alert from "../../../components/Alert";
+
+import { connect } from 'react-redux';
+
+import AuthActions from "../../../Stores/Auth/Actions"
 
 class Login extends Component {
 
@@ -45,7 +49,8 @@ class Login extends Component {
       .then(response => {
         console.log('success')
         console.log(response)
-        localStorage.setItem('django_react_user', response.data);
+        // localStorage.setItem('django_react_user', response.data);
+        this.props.loginSuccess(response.data)
         // return this.props.router.push('/dashboard')
       }).catch(({response}) => {
       if (response.status == 400) {
@@ -69,6 +74,12 @@ class Login extends Component {
   }
 
   render() {
+
+    console.log(this.props.auth)
+    if (this.props.auth.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -135,4 +146,14 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  // auth: {name : '', isLoading: false, isAuthenticated: true},
+  auth: state.auth,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginSuccess: (payload) => dispatch(AuthActions.loginSuccess(payload))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

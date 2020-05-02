@@ -28,7 +28,9 @@ router = routers.DefaultRouter()  # add this
 router.register(r'todos', views.TodoView, 'todo')  # add this
 
 urlpatterns = [
+    # path(r'api/auth/', include('knox.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('', include('frontend.urls')),
+    path('', include('auth.urls')),
 ]

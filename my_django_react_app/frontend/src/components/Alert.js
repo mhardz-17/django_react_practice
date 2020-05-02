@@ -8,7 +8,7 @@ function Alert(props) {
     toggleShow(!isOpen)
   }
   return (
-    <ReactAlert isOpen={isOpen} toggle={toggle}>{props.msg || props.children}</ReactAlert>
+    <ReactAlert isOpen={isOpen} toggle={toggle} {...props}>{props.msg || props.children}</ReactAlert>
   );
 }
 

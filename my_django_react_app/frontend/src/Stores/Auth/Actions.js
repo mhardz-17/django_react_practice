@@ -15,7 +15,7 @@ const { Types, Creators } = createActions({
   // logout:null,
   logoutUserSuccess:null,
   userLoaded:['payload'],
-  // registerUser: ['data'],
+  registerSuccess: ['payload'],
   // fetchUserMyData: ['credentials'],
 })
 
@@ -23,8 +23,10 @@ export const loadUser = () => (dispatch, getState) => {
   // User Loading
   // dispatch({ type: USER_LOADING });
 
+  let token = tokenConfig(getState);
+  if(!token) return
   axios
-    .get('/api/auth/user', tokenConfig(getState))
+    .get('/api/auth/user', token)
     .then((res) => {
       console.log(res)
       dispatch(Creators.userLoaded(res.data))
@@ -63,6 +65,7 @@ export const tokenConfig = (getState) => {
   // const token = getState().auth.token;
 
   const token = localStorage.getItem('react_django_token')
+  if(!token) return false
   console.log(token)
   // Headers
   const config = {

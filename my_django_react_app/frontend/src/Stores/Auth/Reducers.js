@@ -62,6 +62,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   // [UserTypes.FETCH_USER_SUCCESS]: fetchUserSuccess,
   // [UserTypes.FETCH_USER_FAILURE]: fetchUserFailure,
   [AuthTypes.LOGIN_SUCCESS]: loginSuccess,
+  [AuthTypes.REGISTER_SUCCESS]: loginSuccess,
   // [UserTypes.LOGIN_FAILURE]: loginFailed,
   [AuthTypes.LOGOUT_USER_SUCCESS]: logoutUserSuccess,
   [AuthTypes.USER_LOADED]: userLoaded,

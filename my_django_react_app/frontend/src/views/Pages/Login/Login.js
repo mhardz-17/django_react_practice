@@ -86,7 +86,7 @@ class Login extends Component {
           <Row className="justify-content-center">
             <Col md="8">
               <CardGroup>
-                <Card className="p-4">
+                <Card className="p-4 d-md-block">
                   <CardBody>
                     <Form>
                       <h1>Login</h1>
@@ -125,7 +125,7 @@ class Login extends Component {
                     </Form>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
+                <Card className="text-white bg-primary py-5 col-md-12">
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>

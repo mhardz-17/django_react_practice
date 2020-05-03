@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import {tokenConfig} from "../../Stores/Auth/Actions";
 
 function TodoRow(props) {
-  const {todo,index, onClickEdit} = props
+  const {todo,index, onClickEdit, toggleTodoStatus} = props
 
   const onClickDelete = () => {
     Swal.fire({
@@ -39,15 +39,14 @@ function TodoRow(props) {
         props.onClickDelete(props.todo.id);
       }
     })
-
   }
 
   return (
-    <tr key={todo.id.toString()}>
+    <tr key={todo.id.toString()} className={'todo-' + todo.id}>
       <th scope="row">{parseInt(index) + 1}</th>
       <td>{todo.title}</td>
       <td>{todo.description}</td>
-      <td><AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} checked={todo.completed} /></td>
+      <td><AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} checked={todo.completed} onClick={() => toggleTodoStatus(todo)} /></td>
       <td>{todo.created_at}</td>
       <td>{todo.updated_at}</td>
       <td>
@@ -79,7 +78,6 @@ class Todos extends Component {
   }
 
   loadTodos =(page) => {
-    console.log(tokenConfig())
     axios.get('api/todos',tokenConfig())
       .then(response => {
         this.setState({todos: response.data})
@@ -142,6 +140,25 @@ class Todos extends Component {
       })
   }
 
+  toggleTodoStatus = todo => {
+    let completed  = todo.completed ? 0 : 1;
+    let url = `api/todos/${todo.id}/set_completion?completed=${completed}`
+    axios.get(url,tokenConfig())
+        .then(response => {
+          this.setState({
+            todos: [...this.state.todos.map(t => {
+              if(t.id == todo.id) {
+                return {...todo, completed : !todo.completed}
+              }
+              return t;
+            })],
+          })
+        }).catch(error => {
+        console.log(error)
+        this.setState(error);
+      })
+  }
+
   render() {
     return (
       <div className="animated fadeIn">
@@ -168,7 +185,7 @@ class Todos extends Component {
                   </thead>
                   <tbody>
                     {this.state.todos.map((todo, index) =>
-                      <TodoRow key={index} index={index} todo={todo} onClickEdit={this.onClickEdit} onClickDelete={this.onClickDelete} />
+                      <TodoRow key={index} index={index} todo={todo} onClickEdit={this.onClickEdit} onClickDelete={this.onClickDelete} toggleTodoStatus={this.toggleTodoStatus} />
                     )}
                   </tbody>
                 </Table>

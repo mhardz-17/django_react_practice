@@ -22,6 +22,9 @@ import Alert from "../../components/Alert"
 import Swal from "sweetalert2";
 import {tokenConfig} from "../../Stores/Auth/Actions";
 
+var moment = require('moment/moment');
+
+
 function TodoRow(props) {
   const {todo,index, onClickEdit, toggleTodoStatus} = props
 
@@ -47,8 +50,8 @@ function TodoRow(props) {
       <td>{todo.title}</td>
       <td>{todo.description}</td>
       <td><AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} checked={todo.completed} onClick={() => toggleTodoStatus(todo)} /></td>
-      <td>{todo.created_at}</td>
-      <td>{todo.updated_at}</td>
+      <td>{moment(todo.created_at).format('YYYY-MM-DD HH:mm')}</td>
+      <td>{moment(todo.updated_at).format('YYYY-MM-DD HH:mm')}</td>
       <td>
         <Row className="align-items-center">
           <Button size='sm' className={'mr-1'} onClick={ () => onClickEdit(todo)}><i className="fa fa-edit fa-lg"></i>Edit</Button>
@@ -111,7 +114,6 @@ class Todos extends Component {
             message: 'Update Successful'
           })
         }).catch(error => {
-        console.log(error)
         this.setState(error);
       })
     } else {
@@ -119,7 +121,6 @@ class Todos extends Component {
         .then(response => {
           this.setState({todos: [...this.state.todos, response.data], showModal: false, action: '', todo: {},message: 'Added Successful'})
         }).catch(error => {
-        console.log(error)
         this.setState(error);
       })
     }
@@ -135,7 +136,7 @@ class Todos extends Component {
             message: 'Delete Successful'
           })
         }).catch(error => {
-        console.log(error)
+        // console.log(error)
         this.setState(error);
       })
   }
@@ -154,7 +155,6 @@ class Todos extends Component {
             })],
           })
         }).catch(error => {
-        console.log(error)
         this.setState(error);
       })
   }

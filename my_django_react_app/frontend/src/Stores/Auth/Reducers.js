@@ -10,8 +10,6 @@ const INITIAL_STATE = {
 }
 
 export const loginSuccess = (state, {payload}) => {
-  console.log('inside login success')
-  console.log(payload)
   localStorage.setItem('react_django_token', payload.token);
   return {
     ...state,
@@ -35,7 +33,6 @@ export const logoutUser = (state) => {
 }
 
 export const userLoaded = (state,{payload}) =>{
-  console.log('user loaded')
   return {
     ...state,
     isAuthenticated: true,
@@ -46,7 +43,6 @@ export const userLoaded = (state,{payload}) =>{
 
 export const logoutUserSuccess = (state,{payload}) =>{
   localStorage.removeItem('react_django_token');
-  console.log('user logged out')
   return {
     ...state,
     isAuthenticated: false,

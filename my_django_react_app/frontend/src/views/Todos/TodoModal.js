@@ -27,7 +27,6 @@ class TodoModal extends Component {
   }
 
   onInputChange = (e) => {
-    console.log(e);
     let todo = this.state.todoItem, value = e.target.value;
     if (e.target.type === "checkbox") {
       value = e.target.checked;

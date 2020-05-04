@@ -82,14 +82,12 @@ class Register extends Component {
 
     axios.post(`api/auth/register`, body, config)
       .then(response => {
-        console.log('success')
-        console.log(response)
         // localStorage.setItem('django_react_user', response.data);
         this.props.registerSuccess(response.data)
         // return this.props.router.push('/dashboard')
       }).catch(({response}) => {
       if (response.status == 400) {
-        console.log(response)
+        this.setState({validationErrors: response.data})
         this.setState({validationErrors: response.data})
       } else {
         this.setState({errorMsg: 'Server Error'})

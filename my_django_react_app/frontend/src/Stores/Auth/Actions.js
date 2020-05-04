@@ -28,7 +28,6 @@ export const loadUser = () => (dispatch, getState) => {
   axios
     .get('/api/auth/user', token)
     .then((res) => {
-      console.log(res)
       dispatch(Creators.userLoaded(res.data))
     })
     .catch((err) => {
@@ -42,13 +41,9 @@ export const loadUser = () => (dispatch, getState) => {
 export const logoutUser = () => (dispatch, getState) => {
   // User Loading
   // dispatch({ type: USER_LOADING });
-
-  console.log('dispatching logout user')
-
   axios
     .post('/api/auth/logout/',{}, tokenConfig(getState))
     .then((res) => {
-      console.log(res)
       dispatch(Creators.logoutUserSuccess())
     })
     .catch((err) => {
@@ -66,7 +61,6 @@ export const tokenConfig = (getState) => {
 
   const token = localStorage.getItem('react_django_token')
   if(!token) return false
-  console.log(token)
   // Headers
   const config = {
     headers: {

@@ -47,14 +47,11 @@ class Login extends Component {
 
     axios.post(`api/auth/login/`, body, config)
       .then(response => {
-        console.log('success')
-        console.log(response)
         // localStorage.setItem('django_react_user', response.data);
         this.props.loginSuccess(response.data)
         // return this.props.router.push('/dashboard')
       }).catch(({response}) => {
       if (response.status == 400) {
-        console.log(response)
         this.setState({errorMsg: response.data.non_field_errors})
       } else {
         this.setState({errorMsg: 'Server Error'})
@@ -74,8 +71,6 @@ class Login extends Component {
   }
 
   render() {
-
-    console.log(this.props.auth)
     if (this.props.auth.isAuthenticated) {
       return <Redirect to="/" />;
     }

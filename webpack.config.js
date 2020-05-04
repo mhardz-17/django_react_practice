@@ -41,7 +41,13 @@ module.exports = {
   },
   output: {
     // path: path.resolve(__dirname, 'my_django_react_app/frontend/static/frontend'),
-    publicPath:'static/frontend/build/'
+    publicPath: 'static/frontend/build/'
   },
-  performance: { hints: false }
+  performance: {hints: false},
+  optimization: {
+    namedModules: true,
+    namedChunks: true
+  },
+  // resolve: {alias: {moment$: path.resolve("./node_modules/moment/moment.js")}}
+
 }

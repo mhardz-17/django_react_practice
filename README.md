@@ -1,6 +1,11 @@
 #Django - React Practice
  This project aims to study python with django/rest framework as backend and react js as frontend.
 
+##Tech
+* Backend - Python, Django, Django Rest Framework, Django REST Knox, Mysql for database
+* Front End - React JS, redux, reduxsause
+* UI - Core UI
+
 ## Prerequisites
 * Python
 * Version 3
@@ -41,6 +46,6 @@
   There may be issue on installation instruction, let me know if what part need to update.
   
 ###Thanks to the following for the tutorials
-*  https://scotch.io/tutorials/build-a-to-do-application-using-django-and-react#toc-prerequisites
+* https://scotch.io/tutorials/build-a-to-do-application-using-django-and-react#toc-prerequisites
 * Traversy Media -> https://www.youtube.com/playlist?list=PLillGF-RfqbbRA-CIUxlxkUpbq0IFkX60
 
